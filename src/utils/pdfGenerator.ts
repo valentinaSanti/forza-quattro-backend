@@ -9,7 +9,7 @@ export const generateMoveHistoryPDF = (moves: Move[], matchId: number, res: Resp
     const doc = new PDFDocument({margin: 40});
 
     //definizione di due header HTTP
-    res.setHeader("Content- Type", "application/pdf"); //descrive il contenuto inviato come PDF
+    res.setHeader("Content-Type", "application/pdf"); //descrive il contenuto inviato come PDF
     res.setHeader("Content-Disposition", `attachment; filename=match-${matchId}-history.pdf`);
     // segnaliamo al client di trattare il contenuto come un file da scaricare suggerendo il nome del file 
 

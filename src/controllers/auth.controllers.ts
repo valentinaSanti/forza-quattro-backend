@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import * as AuthService from "../services/auth.service"
 import { ConflictError, UnauthorizedError } from "../utils/errors";
 import { StatusCodes } from "http-status-codes";
-import { STATUS_CODES } from "http";
 
 export const login =async (req: Request,res:Response, next: NextFunction):Promise<void> =>{
     try{

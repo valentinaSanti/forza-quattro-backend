@@ -2,7 +2,7 @@ import { Response, NextFunction } from "express";
 import { AuthRequest } from "./authMiddleware";
 import { UserDAo } from "../dao/user.dao";
 import { MATCH_COSTS } from "../utils/constants";
-import { ForbiddenError, NotFoundError, UnauthorizedError } from "../utils/errors";
+import { NotFoundError, UnauthorizedError } from "../utils/errors";
 import { MatchType } from "../enum/matchType";
 
 const userDAo = new UserDAo();
@@ -19,7 +19,7 @@ export const checkTokenBalance = async (req:AuthRequest, res: Response, next:Nex
         const {type} = req.body;
         const requiredCost = (type === MatchType.VS_AI ) ? MATCH_COSTS.VS_AI_CREATION : MATCH_COSTS.UVU_CREATION;
         if (user.tokens < requiredCost){
-            return next(new ForbiddenError("I token che possiedi non sono sufficienti per avviare il match"))
+            return next(new UnauthorizedError("I token che possiedi non sono sufficienti per avviare il match"))
         }
         next();
     }catch(error){

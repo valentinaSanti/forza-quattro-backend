@@ -27,6 +27,10 @@ export class MoveDAo implements IDao<Move>{
         return await Move.findAll({where:{matchId}, order:[["createdAt", "ASC"]]});
     }
 
+    async findLastByMatch(matchId:number):Promise<Move | null>{
+        return await Move.findOne({where:{matchId}, order:[["createdAt", "DESC"]]});
+    }
+
     async findByMatchWithDateFilter(matchId:number, from?:Date, to?:Date): Promise<Move[]>{
         const whereCondition: any = {matchId};
         if (from || to){

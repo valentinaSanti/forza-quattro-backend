@@ -10,7 +10,8 @@
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "start": "node dist/server.js",
-    "seed": "ts-node src/seed/seed.ts"
+    "seed": "ts-node src/seed/seed.ts",
+    "test":"jest"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -28,9 +29,12 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.20.2",
     "@types/pdfkit": "^0.17.6",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.13",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.3"
   }

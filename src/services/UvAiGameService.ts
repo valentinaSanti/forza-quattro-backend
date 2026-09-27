@@ -28,8 +28,11 @@ export const makeMove = async (matchId: number, userId:string, column:number)=>{
         const aiColumn = applyAIMove(game as Connect4AI, AiDifficulty.HARD);
 
         await moveDao.create({matchId, playerId:aiUser.id, column: aiColumn}as Move, t);
-        aiUser.tokens -= MATCH_COSTS.MOVE_COST;
-        await userDao.update(aiUser,t);
+        //il costo della mossa dell'AI viene addebitato all'utente
+        const humanUser = await userDao.read(userId, t);
+        if(!humanUser) throw new InternalServerError("utente non configurato nel sistema");
+        humanUser.tokens -= MATCH_COSTS.MOVE_COST;
+        await userDao.update(humanUser,t);
 
         const status = getStatus(game);
 

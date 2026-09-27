@@ -6,7 +6,8 @@ import { Match } from "../models";
 import { sequelize } from "../db/database";
 import { MatchStatus } from "../enum/matchStatus";
 import { MatchType } from "../enum/matchType";
-import { WinReason } from "../enum/winReason";
+import { MatchEndCause } from "../enum/matchEndCause";
+import { checkTimeLimit } from "./baseGameService";
 
 const userDAo = new UserDAo();
 const matchDao = new MatchDao();
@@ -73,6 +74,7 @@ export const createMatch =async (
 export const getMatchStatus = async(matchId:number)=>{
     const match = await matchDao.read(matchId);
     if(!match) throw new NotFoundError( "Match non trovato");
+    await checkTimeLimit(match);
     return match;
 };
 
@@ -90,7 +92,7 @@ export const abandonMatch = async (matchId:number,userId:string)=>{
     }
     match.status = MatchStatus.ABANDONED;
     match.winnerId =match.playerOneId===userId? match.playerTwoId : match.playerOneId;
-    match.winnerReason = WinReason.WIN_ABB;
+    match.winnerReason = MatchEndCause.ABANDONED;
     match.currentTurn = null;
 
     await matchDao.update(match);

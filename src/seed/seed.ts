@@ -46,6 +46,12 @@ const seed = async () =>{
             role: UserRole.USER,
             isAI: false,
         });
+        await User.create({
+            email:"matteo.neri@example.it",
+            password: hashedPassword,
+            role: UserRole.USER,
+            isAI: false,
+        });
 
         console.log("Seed completato con successo");
         process.exit(0);

@@ -6,4 +6,5 @@ const router = Router();
 
 router.post("/login",validateLogin,AuthController.login);
 router.post("/register",validateRegister, AuthController.register);
+//controllo di verifica non tornare password
 export default router;

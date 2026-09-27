@@ -34,7 +34,7 @@ Move.init(
             references: {model: Match, key:'id'},
         },
         playerId:{
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull: false,
             references: {model: User, key:'id'},
         },

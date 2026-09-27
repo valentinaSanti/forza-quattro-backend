@@ -1,3 +1,4 @@
+//test del funzionamento e dell'output della libreria integrata
 const { Connect4, Connect4AI} = require('connect4-ai');
 
 

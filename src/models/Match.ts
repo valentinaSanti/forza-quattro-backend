@@ -3,7 +3,7 @@ import { sequelize } from '../db/database';
 import { User } from './User';
 import { MatchType } from '../enum/matchType';
 import { MatchStatus } from '../enum/matchStatus';
-import { WinReason } from '../enum/winReason';
+import { MatchEndCause } from '../enum/matchEndCause';
 
 interface MatchAttribute {
     id: number;
@@ -13,8 +13,8 @@ interface MatchAttribute {
     playerTwoId: string | null; // null nel caso in cui vsAI
     currentTurn: string | null; // id utente che deve giocare
     winnerId: string | null;
-    winnerReason: WinReason | null;
-    timeLimit: number | null; //tempo limite per una mossa, nullo se non c'è un limite
+    winnerReason: MatchEndCause | null;
+    timeLimit: number | null; //tempo limite per una mossa, nullo se non c'è un limite (espresso in secondi)
     boardState: string;
 }
 
@@ -29,7 +29,7 @@ export class Match extends Model<MatchAttribute,MatchCreationAttributes> impleme
     public playerTwoId!: string | null; 
     public currentTurn!: string | null; 
     public winnerId!: string | null;
-    public winnerReason!: WinReason | null;
+    public winnerReason!: MatchEndCause | null;
     public timeLimit!: number | null; 
     public boardState!: string;
 
@@ -54,26 +54,26 @@ Match.init(
             defaultValue:MatchStatus.ACTIVE,
         },
         playerOneId:{
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull:false,
             references:{model: 'users', key: 'id'},
         },
         playerTwoId:{
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull:true,
             references:{model: 'users', key: 'id'},
         },
         currentTurn:{
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull:true,
         },
         winnerId: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull:true,
             references:{model: 'users', key: 'id'},
         },
         winnerReason:{
-            type:DataTypes.ENUM(...Object.values(WinReason)),
+            type:DataTypes.ENUM(...Object.values(MatchEndCause)),
             allowNull:true,
             defaultValue: null,
         },

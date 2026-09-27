@@ -28,7 +28,7 @@ export const validateLogin =[
 
 export const  validateCreateMatch =[
     body("type").isIn(Object.values(MatchType)).withMessage("tipo partita non valida"),
-    body("opponentEmail").if(body("type").equals(MatchType.UVU))
+    body("playerTwoEmail").if(body("type").equals(MatchType.UVU))
         .isEmail()
         .withMessage("Email avversario obbligatoria"),
     checkValidation,
