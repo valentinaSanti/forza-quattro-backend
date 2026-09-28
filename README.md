@@ -284,7 +284,7 @@ Per non appesantire la lettura, i diagrammi delle sequenze successivi al primo m
 ![Diagramma delle sequenze - Esecuzione mossa](diagrammi/Esecuzione.jpg)
 
 #### Abandono partita: POST /api/v1/matches/:id/abandon
-![Diagramma delle sequenze - Abbandono partita](diagrammi/abbandono.jpg)
+![Diagramma delle sequenze - Abbandono partita](diagrammi/Abbandono.jpg)
 
 #### Stato partita: GET /api/v1/matches/:id/status
 ![Diagramma delle sequenze - Stato partita](diagrammi/stato.jpg)
@@ -320,7 +320,7 @@ Richiede un JWT valido nell'header `Authorization: Bearer <token>`.
 ![Creazione partita](docs/assets/crezionePartita.png)
 
 #### Esempio di Risposta
-![Risposta creazione partita](docs/assets/crezionePartita.png)
+![Risposta creazione partita](docs/assets/RispostaCreazione.png)
 
 ### Esempio di utilizzo: Esecuzione di una mossa
 
@@ -343,7 +343,7 @@ Richiede un JWT valido nell'header `Authorization: Bearer <token>`.
 
 ### Esempio di utilizzo: visualizzazione dello storico mosse in pdf
 #### Endpoint
-**Metodo:** GET
+- **Metodo:** GET
 - **Percorso:** /api/v1//matches/:id/history?format=&from=&to=
 #### Autenticazione
 Richiede un JWT valido nell'header `Authorization: Bearer <token>`.
