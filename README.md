@@ -260,7 +260,29 @@ Sono presenti middleware dedicati a:
 ![Diagramma dei casi d'uso](diagrammi/casi.jpg)
 
 ### Diagrammi delle sequenze 
+#### Login
+![Diagramma delle sequenze - Login](diagrammi/Login.jpg)
 
+#### Creazione partita vsAi
+![Diagramma delle sequenze - Creazione partita vsAi](diagrammi/Creazione.jpg)
+
+#### Esecuzione mossa
+![Diagramma delle sequenze - Esecuzione mossa](diagrammi/Esecuzione.jpg)
+
+#### Abandono partita
+![Diagramma delle sequenze - Abbandono partita](diagrammi/abbandono.jpg)
+
+#### Stato partita
+![Diagramma delle sequenze - Stato partita](diagrammi/stato.jpg)
+
+#### Storico mosse
+![Diagramma delle sequenze - Storico mosse](diagrammi/storico.jpg)
+
+#### Classifica
+![Diagramma delle sequenze - classifica](diagrammi/classifica.jpg)
+
+#### Ricarica token
+![Diagramma delle sequenze - Ricarica token](diagrammi/ricarica.jpg)
 
 ---
 ## Test del progetto tramite chiamate con Postman
@@ -317,6 +339,10 @@ oppure all'interno del container Docker:
 ```bash
 docker compose exec backend npm test
 ```
+### Risultati
+Di seguito è riportato l'esito dei test
+![Risultato test Jest](docs/assets/OutputTestJest.png)
+
 ## Configurazione e uso
 ### Prerequisiti
 Per eseguire il progetto correttamente è necessario avere installati:

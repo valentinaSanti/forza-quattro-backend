@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import {AuthRequest, authenticateJWT, requireAdmin} from "../src/middlewares/authMiddleware";
+import {AuthRequest, authenticateJWT, forbiddenAdmin, requireAdmin} from "../src/middlewares/authMiddleware";
 import {UnauthorizedError,ForbiddenError} from "../src/utils/errors";
 import * as authHelper from "../src/utils/auth.helper";
 import {UserRole} from "../src/enum/userRole";
@@ -20,7 +20,7 @@ describe("Auth Middleware - authenticateJWT", ()=>{
     let next: jest.Mock;
 
     beforeEach(()=>{
-        mockRequest = {};
+        mockRequest = {headers: {}};
         mockResponse = {};
         next = jest.fn();
         jest.clearAllMocks(); // andiamo a pulire lo stato dei mock dai test precedenti
@@ -107,7 +107,7 @@ describe ("AuthMiddleware - forbiddenAdmin", ()=>{
     // globale quando l'utente ha il ruolo di ADMIN
     it("dovrebbe chiamare next con ForbiddenError se l'utente ha ruolo ADMIN", ()=>{
         mockRequest.user={id:"uuid-admin", email:"admin@example.it", role:UserRole.ADMIN};
-        requireAdmin(mockRequest as AuthRequest, mockResponse as Response, next as NextFunction);
+        forbiddenAdmin(mockRequest as AuthRequest, mockResponse as Response, next as NextFunction);
         expect(next).toHaveBeenCalledWith(expect.any(ForbiddenError));
     });
 
@@ -115,7 +115,7 @@ describe ("AuthMiddleware - forbiddenAdmin", ()=>{
     // l'utente ha il ruolo di USER
     it("dovrebbe chiamare next() senza errori se l'utente  ha ruolo USER", ()=>{
         mockRequest.user={id:"uuid-1", email:"mario.rossi@example.it", role:UserRole.USER};;
-        requireAdmin(mockRequest as AuthRequest, mockResponse as Response, next as NextFunction);
+        forbiddenAdmin(mockRequest as AuthRequest, mockResponse as Response, next as NextFunction);
         expect(next).toHaveBeenCalledWith();
     });
 
