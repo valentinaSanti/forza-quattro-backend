@@ -3,6 +3,7 @@ import { AuthRequest } from "../middlewares/authMiddleware";
 import * as MatchService from "../services/match.services"
 import { StatusCodes } from "http-status-codes";
 
+//gestione della creazione di un match
 export const createMatch = async (req: AuthRequest, res:Response, next:NextFunction)=>{
     try{
         const {type, playerTwoEmail,timeLimit} = req.body;
@@ -18,6 +19,7 @@ export const createMatch = async (req: AuthRequest, res:Response, next:NextFunct
     }
 };
 
+//gestione dello stato di un match
 export const getStatus = async (req:AuthRequest, res: Response, next:NextFunction)=>{
     try{
         const matchId = Number(req.params.id);
@@ -28,6 +30,7 @@ export const getStatus = async (req:AuthRequest, res: Response, next:NextFunctio
     }
 };
 
+//gestione la abbandono di un match
 export const abandon = async (req:AuthRequest, res:Response, next:NextFunction)=>{
     try{
         const matchId = Number(req.params.id);

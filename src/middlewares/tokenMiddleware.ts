@@ -5,6 +5,7 @@ import { MATCH_COSTS } from "../utils/constants";
 import { NotFoundError, UnauthorizedError } from "../utils/errors";
 import { MatchType } from "../enum/matchType";
 
+// Middleware per la gestione dei token
 const userDAo = new UserDAo();
 export const checkTokenBalance = async (req:AuthRequest, res: Response, next:NextFunction)=>{
     try{

@@ -15,11 +15,12 @@ interface MatchAttribute {
     winnerId: string | null;
     winnerReason: MatchEndCause | null;
     timeLimit: number | null; //tempo limite per una mossa, nullo se non c'è un limite (espresso in secondi)
-    boardState: string;
+    //boardState: string;
 }
 
 //Attributi con valori di default alla creazione:id e token
-export interface MatchCreationAttributes extends Optional<MatchAttribute,'id' |'boardState'|'status' | 'winnerReason' | 'winnerId'| 'currentTurn' | 'playerTwoId'>{}
+export interface MatchCreationAttributes extends Optional<MatchAttribute,'id' |'status' | 'winnerReason' | 'winnerId'| 'currentTurn' | 'playerTwoId'>{}
+//export interface MatchCreationAttributes extends Optional<MatchAttribute,'id' |'boardState'|'status' | 'winnerReason' | 'winnerId'| 'currentTurn' | 'playerTwoId'>{}
 
 export class Match extends Model<MatchAttribute,MatchCreationAttributes> implements MatchAttribute {
     public id!: number;
@@ -31,7 +32,7 @@ export class Match extends Model<MatchAttribute,MatchCreationAttributes> impleme
     public winnerId!: string | null;
     public winnerReason!: MatchEndCause | null;
     public timeLimit!: number | null; 
-    public boardState!: string;
+    //public boardState!: string;
 
     // Date relative alla creazione del match e al suo aggiornamento 
     public readonly createdAt!: Date;
@@ -81,11 +82,11 @@ Match.init(
             type: DataTypes.INTEGER,
             allowNull:true,
         },
-        boardState:{
+        /* boardState:{
             type: DataTypes.TEXT,
             allowNull:false,
             defaultValue: JSON.stringify(Array(6).fill(Array(7).fill(null))) //griglia vuota 6x7
-        },
+        }, */
     },
     {
         sequelize,

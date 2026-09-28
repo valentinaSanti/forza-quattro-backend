@@ -1,3 +1,4 @@
+// stati del match
 export enum MatchStatus {
     ACTIVE = 'active',
     FINISHED = 'finished',

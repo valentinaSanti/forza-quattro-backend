@@ -3,6 +3,7 @@ import { User } from "../models";
 import { Transaction } from "sequelize";
 import { UserRole } from "../enum/userRole";
 
+// DAO per il l'user con implementazione funzioni generiche e specifiche per l'user
 export class UserDAo implements IDao<User>{
     async create(item: User, transaction?:Transaction): Promise<User> {
         return await User.create(item, {transaction});

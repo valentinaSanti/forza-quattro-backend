@@ -4,6 +4,7 @@ import { Op, Transaction} from "sequelize";
 import { MatchStatus } from "../enum/matchStatus";
 import { MatchCreationAttributes } from "../models/Match";
 
+// DAO per il match con implementazione funzioni generiche e specifiche per il match
 export class MatchDao implements IDao<Match>{
     async create(item: MatchCreationAttributes, transaction?:Transaction): Promise<Match> {
         return await Match.create(item, {transaction});

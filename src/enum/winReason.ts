@@ -1,3 +1,4 @@
+// cause di vittoria o sconfita
 export enum WinReason{
     WIN = 'Vinte',
     WIN_ABB = 'Vinta per abbandono',

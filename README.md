@@ -1,13 +1,24 @@
 # Sviluppo di un Back-end per il gioco di Forza Quattro
+[![Postgres](https://img.shields.io/badge/Made%20with-postgres-%23316192.svg?style=plastic&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![NodeJS](https://img.shields.io/badge/Made%20with-node.js-6DA55F?style=plastic&logo=node.js&logoColor=white)](https://nodejs.org/en)
+[![Sequelize](https://img.shields.io/badge/Made%20with-Sequelize-52B0E7?style=plastic&logo=Sequelize&logoColor=white)](https://sequelize.org/)
+[![Express.js](https://img.shields.io/badge/Made%20with-express.js-%23404d59.svg?style=plastic&logo=express&logoColor=%2361DAFB)](https://expressjs.com/it/)
+[![JWT](https://img.shields.io/badge/Made%20with-JWT-black?style=plastic&logo=JSON%20web%20tokens)](https://jwt.io/)
+[![TypeScript](https://img.shields.io/badge/Made%20with-typescript-%23007ACC.svg?style=plastic&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Postman](https://img.shields.io/badge/Made%20with-Postman-FF6C37?style=plastic&logo=postman&logoColor=white)](https://www.postman.com/)
+[![Docker](https://img.shields.io/badge/Made%20with-docker-%230db7ed.svg?style=plastic&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Jest](https://img.shields.io/badge/Made%20with-jest-C21325?style=plastic&logo=jest&logoColor=white)](https://jestjs.io)
+
+
 Il seguente progetto è stato sviluppato nell'ambito dell'esame di **Programmazione Avanzata** per l'AA **2025/2026**, presso l'**Università Politecnica delle Marche**, all'interno del corso di Laurea Magistrale in **Ingegneria Informatica e dell'automazione**.
 
 Il progetto propone un sistema backend per la gestione del gioco di **Forza Quattro**, prevedendo sia sfide User VS User che sfide User VS AI.
 
 Il sistema supporta la presenza di più partite contemporaneamente, garantendo però che ciascun utente possa partecipare attivamente ad una sola partita alla volta.
 
-Attraverso il backend viene gestito l'intero ciclo di vita della partita: registrazione degli utenti, autenticazione dell'utente, controllo del credito token, creazione della partita, esecuzione delle mosse, aggiornamento dello stato, salvataggio dello storico, abbandono delle partite, visualizzazione dello storico delle partite di un match e visualizzazione della classifica degli utenti.
+Attraverso il backend viene gestito l'intero ciclo di vita della partita: registrazione degli utenti, autenticazione dell'utente, controllo del credito token, creazione della partita, esecuzione delle mosse, aggiornamento dello stato, salvataggio dello storico, abbandono delle partite, visualizzazione dello storico delle mosse di un match e visualizzazione della classifica degli utenti.
 
-L'applicazione è stata sviluppata utilizzando **Node.js**, **Typescript**, **Express**, **Sequelize** e **PostgreSQL**. Per la logica di gioco e la generazione delle mosse da parte dell'AI è stata utilizzata la libreria **connect4-ai**. Per quanto la generazione del file PDF è stata utilizzata la libreria **PDFkit**. L'autenticazione degli utenti è stata basata su **JWT** con schema di firma asimmetrico RS256; la chiave privata è stata memorizzata nel file `.env`. L'ambiente di esecuzione è stato predisposto utilizzando **Docker** e **Docker Compose**. Per l'esecuzione dei test automatici è stato utilizzato **Jest** mentre per effettuare dei test manuali dell'API è stato utilizzato **Postman**
+L'applicazione è stata sviluppata utilizzando **Node.js**, **Typescript**, **Express**, **Sequelize** e **PostgreSQL**. Per la logica di gioco e la generazione delle mosse da parte dell'AI è stata utilizzata la libreria **connect4-ai**. Per quanto la generazione del file PDF è stata utilizzata la libreria **PDFkit**. L'autenticazione degli utenti è stata basata su **JWT** con schema di firma asimmetrico RS256; la chiave privata è stata memorizzata nel file `.env`. L'ambiente di esecuzione è stato predisposto utilizzando **Docker** e **Docker Compose**. Per l'esecuzione dei test automatici è stato utilizzato **Jest** mentre per effettuare dei test manuali dell'API è stato utilizzato **Postman**.
 
 Dal punto di vista progettuale, il backend segue un'architettura a livelli:
 
@@ -38,13 +49,13 @@ Gli obiettivi specifici del progetto sono:
 - supportare la creazione di partite tra utenti reali mediante la modalità **UvU**;
 - supportare la creazione di partite tra un utente reale e l'AI mediante la modalità **UvAi**;
 - gestione automatica delle mosse dell'AI nelle partite **UvAi**;
-- salvare lo storico delle mosse di una partita garantendo la possibilità di selezionare il periodo di cui si è interessato, inoltre è possibile scegliere tra file JSON e file PDF;
+- salvare lo storico delle mosse di una partita garantendo la possibilità di selezionare il periodo di cui si è interessati, inoltre è possibile scegliere tra file JSON e file PDF;
 - mantenere aggiornato lo **stato delle partite**, compreso turno corrente, vincitore, motivo della conclusione della partita;
 - gestione dell'abbandono di una partita e assegnazione del vincitore;
-- validare i payload delle richieste tramite middleware dedicati, prima che raggiungano la logica di business;
+- validazione  dei payload delle richieste tramite middleware dedicati, prima che raggiungano la logica di business;
 - esporre una rotta pubblica (priva di autenticazione) per la visualizzazione della classifica, ordinabile in modo crescente o decrescente per punteggio;
 - consentire l'impostazione di un limite di tempo massimo per effetuare una mossa, con conclusione automatica della partita in caso di superamento (o senza limiti se non specificato);
-- inpedisce agli utenti di tipo ADMIN di partecipare alle partite, riservando loro esclusivamente la gestione della ricarica del credito token
+- impedire agli utenti di tipo ADMIN di partecipare alle partite, riservando loro esclusivamente la gestione della ricarica del credito token
 - centralizzazione degli errori tramite middleware.
 
 ---
@@ -57,20 +68,20 @@ La struttura principale del progetto è la seguente:
 ```text
 .
 ├── src/
-|   ├── controllers/
-|   ├── dao/
+|   ├── controllers/                            # file relativi ai Controller
+|   ├── dao/                                    # file relativi ai dao
 |   ├── db/
-|   ├── enum/
-|   ├── middlewares/
-|   ├── models/
-|   ├── routes/
+|   ├── enum/                                   # enumerativi 
+|   ├── middlewares/                            # file relativi ai middleware
+|   ├── models/                                 # file relativi ai modelli
+|   ├── routes/                                 # file relativi alle rotte
 |   ├── seed/
-|   ├── services/
-|   ├── types/
-|   ├── utils/
+|   ├── services/                               # file relativi ai service
+|   ├── types/                                  
+|   ├── utils/                                  #file relativi alle utility
 |   ├── app.ts
 |   ├──server.ts
-├── tests/
+├── tests/                                      # file relativi ai test Jest
 |
 ├── .env
 |
@@ -89,13 +100,16 @@ La struttura principale del progetto è la seguente:
 ├── README.md
 |
 ├── docs/
-|   ├── exploration
+|   ├── exploration                                     #test sulla libreria connect4-ai
+|   ├── assestment                                      # screenshot degli output
 |
 ├── tsconfig.json
 |
 ├── jest.config.js
 |
-├── postman/
+├── postman/                                            # collection e enviroment
+|
+├── diagrammi/                                          #UML
 ```
 ---
 
@@ -119,7 +133,7 @@ L'attenzione viene posta sulla gestione delle richieste HTTP, sulla logica appli
 
 All'interno del progetto di **Forza Quattro** questo pattern è stato applicato attraverso tre componenti principali: 
 - **Model**: rappresenta la struttura dati dell'applicazione. Contiene le classi Sequelize che definiscono lo schema delle tabelle PostgreSQL, i tipi di dato e le relazioni tra le entità.
-- **Controller**: è responsabile delle richieste HTTP e funge da intermediario tra il client e la logica applicativa. Si occupa dell'invio della richiesta HTTP, della lettura di eventuali parametri, body e informazioni dell'utente autenticato, e inoltra i dati necessari al service corrispondente. Restituiscono risposte nel formato atteso (JSON o PDF).
+- **Controller**: è responsabile delle richieste HTTP e funge da intermediario tra il client e la logica applicativa. Si occupa dell'invio della richiesta HTTP, della lettura di eventuali parametri, body e informazioni dell'utente autenticato, e inoltra i dati necessari al service corrispondente. Restituisce risposte nel formato atteso (JSON o PDF).
 - **Service**: è la componente in cui risiede la logica di business dell'applicazione. 
 
 #### Model
@@ -185,8 +199,7 @@ All'interno del progetto viene utilizzato per la configurazione della connession
 Questa istanza viene importata e riutilizzata in tutti i modelli, evitando la creazioni di connessioni multiple non necessarie e centralizzando le configurazioni.
 
 ### Adapter
-L'**Adapter** è un design pattern strutturale che permette a oggetti con interfacce incompatibili di
-collaborare. In particolare questo pattern risulta molto utile in situazioni, come accade nel progetto, in cui si deve adattarre l'interfaccia di una componente esistente a quella del resto del sistema.
+L'**Adapter** è un design pattern strutturale che permette a oggetti con interfacce incompatibili di collaborare. In particolare questo pattern risulta molto utile in situazioni, come nel progetto, in cui si deve adattarre l'interfaccia di una componente esistente a quella del resto del sistema.
 
 Nel progetto è stato utilizzato questo pattern nel modulo `utils/gameEngine.ts` che incapsula l'utilizzo della libreria esterna `connect4-ai`, scritta in Javascript e priva di interfaccia TypeScript. In particolare il modulo espone funzioni orientate al dominio applicativo nascondendo i dettagli interni della libreria ai Service che la utilizzano. L'utilizzo di questo pattern consente, in caso di sostituzione della libreria di gioco, di dover modificare un solo modulo isolato.
 
@@ -205,7 +218,7 @@ Ogni classe associa automaticamente il proprio status code HTTP (tramite libreri
 Nel caso fosse necessario aggiungere un nuovo tipo di errore, è sufficiente estendere `ApiError` con una nuova sottoclasse, senza modificare service o middleware esistenti.
 
 ### Chain of Responsability
-Il **Chain of Responsability** è un design pattern comportamentale che consente di far attraversare una richiesta a una catena di handler, ciascuno dei quali può elaborarla, bloccarla o passarla al successivo.
+**Chain of Responsability** è un design pattern comportamentale che consente di far attraversare una richiesta a una catena di handler, ciascuno dei quali può elaborarla, bloccarla o passarla al successivo.
 
 Nel progetto questo pattern viene applicato tramite il sistema di middleware di Express. Di seguito viene riportato un esempio di flusso per la creazione di una partita:
 ``` text
@@ -231,8 +244,8 @@ Sono presenti middleware dedicati a:
 ### Riepilogo dei pattern utilizzati
 |Pattern | Applicazione nel progetto | Motivazione |
 |---|---|---|
-|Model-Controller-Service| Intero progetto| Separare la gestione delle richieste HTTP (Controller) dalla logica di business (Service) e dalla struttura dati (Model). In questo modo il codice è più leggibile e permette di modificare un livello senza impattare gli altri.  |
-|DAO | `src/dao/` | Isolando l'accesso ai dati dalla logica applicativa viene consentito di modificare le modalità del database senza toccare i Service, e tramite l'interfaccia `IDao<T>` viene garantito un contratto uniforme tra le entità del sistema.|
+|Model-Controller-Service| Intero progetto| Separa la gestione delle richieste HTTP (Controller) dalla logica di business (Service) e dalla struttura dati (Model). In questo modo il codice è più leggibile e permette di modificare un livello senza impattare gli altri.  |
+|DAO | `src/dao/` | Isola l'accesso ai dati dalla logica applicativa viene consentito di modificare le modalità del database senza toccare i Service, e tramite l'interfaccia `IDao<T>` viene garantito un contratto uniforme tra le entità del sistema.|
 |Singleton | `src/db/database.ts`| Garantisce un'unica istanza di connessione Sequelize condivisa con tutta l'applicazione evitando connessioni multiple non necessarie. Viene centralizzata la configurazione del database in un unico punto.|
 |Adapter | `src/utils/gameEngine.ts` | Viene utilizzato  per incapsulare l'utilizzo della la libreria `connect4-ai` (scritta in Javascript) in un modulo dedicato permettendo di esporre le funzioni in maniera coerente con il resto del sistema e di isolare l'impatto di un'enventuale sostituzione della libreria a un solo modulo |
 |Gerarchia di eccezioni personalizzatta | `src/utils/errors.ts` |Rende il codice più leggibile rispetto alla gestione manuale dei codici numerici e centralizza la logica di traduzione errore-risposta |
@@ -255,33 +268,34 @@ Sono presenti middleware dedicati a:
 ---
 
 ## Diagrammi UML
-
+Nella seguente sezione vengono riportati i diagrammi dei casi d'uso e delle sequenze del backend sviluppato.
 ### Diagramma dei casi d'uso
 ![Diagramma dei casi d'uso](diagrammi/casi.jpg)
 
 ### Diagrammi delle sequenze 
-#### Login
+Per non appesantire la lettura, i diagrammi delle sequenze successivi al primo mostrano il comportamento dei middleware di autenticazione e autorizzazione (authenticateJWT, forbiddenAdmin) limitatamente al percorso positivo; i rami di errore sono documentati in maniera dettagliata nel primo diagramma delle sequenze proposto che li contiene (Creazione partita).
+#### Login: POST /api/v1/auth/login
 ![Diagramma delle sequenze - Login](diagrammi/Login.jpg)
 
-#### Creazione partita vsAi
+#### Creazione partita vsAi: POST /api/v1/matches
 ![Diagramma delle sequenze - Creazione partita vsAi](diagrammi/Creazione.jpg)
 
-#### Esecuzione mossa
+#### Esecuzione mossa: POST /api/v1/matches/:id/move
 ![Diagramma delle sequenze - Esecuzione mossa](diagrammi/Esecuzione.jpg)
 
-#### Abandono partita
+#### Abandono partita: POST /api/v1/matches/:id/abandon
 ![Diagramma delle sequenze - Abbandono partita](diagrammi/abbandono.jpg)
 
-#### Stato partita
+#### Stato partita: GET /api/v1/matches/:id/status
 ![Diagramma delle sequenze - Stato partita](diagrammi/stato.jpg)
 
-#### Storico mosse
+#### Storico mosse: GET /api/v1/matches/:id/history?format=&from=&to=
 ![Diagramma delle sequenze - Storico mosse](diagrammi/storico.jpg)
 
-#### Classifica
+#### Classifica: GET /api/v1/leaderboard?order=desc
 ![Diagramma delle sequenze - classifica](diagrammi/classifica.jpg)
 
-#### Ricarica token
+#### Ricarica token: POST /api/v1/admin/recharge
 ![Diagramma delle sequenze - Ricarica token](diagrammi/ricarica.jpg)
 
 ---
@@ -290,30 +304,53 @@ Il progetto include una Collection Postman con Enviroment dedicato, disponibile 
 
 ### Esempio di utilizzo: Creazione di una partita contro l'IA
 #### Endpoint
-POST/api/v1/matches
+- **Metodo:** POST
+- **Percorso:** /api/v1/matches
+
 #### Autenticazione
 Richiede un JWT valido nell'header `Authorization: Bearer <token>`.
-#### Parametry nel body
+#### Parametry nel body (raw)
+```json
+{
+    "type": "vsAI",
+    "timeLimit": null
+}
+```
 #### Esempio di richiesta (Postman)
+![Creazione partita](docs/assets/crezionePartita.png)
+
 #### Esempio di Risposta
+![Risposta creazione partita](docs/assets/crezionePartita.png)
 
 ### Esempio di utilizzo: Esecuzione di una mossa
+
 #### Endpoint
-POST/api/v1/matches
+- **Metodo:** POST
+- **Percorso:** /api/v1/matches/:id/move
+
 #### Autenticazione
 Richiede un JWT valido nell'header `Authorization: Bearer <token>`.
-#### Parametry nel body
+#### Parametry nel body (raw)
+```json
+{
+    "column":3
+}
+```
 #### Esempio di richiesta (Postman)
+![Esecuzione mossa](docs/assets/esecuzioneMossa.png)
 #### Esempio di Risposta
+![Risposta esecuzione mossa](docs/assets/RispostaMossa.png)
 
-### Esempio di utilizzo: visualizzazione della classifica
+### Esempio di utilizzo: visualizzazione dello storico mosse in pdf
 #### Endpoint
-POST/api/v1/matches
+**Metodo:** GET
+- **Percorso:** /api/v1//matches/:id/history?format=&from=&to=
 #### Autenticazione
-Richiede non richiede autenticazione
-#### Parametry nel body
+Richiede un JWT valido nell'header `Authorization: Bearer <token>`.
 #### Esempio di richiesta (Postman)
+![Storico mosse](docs/assets/storico%20mosse.png)
 #### Esempio di Risposta
+![Risposta storico mosse](docs/assets/rispostaStoricoM.png)
 --- 
 ## Test del progetto tramite Jest
 Il progetto include test automatici fatti con **Jest**, focalizzati sui middleware applicativi. I test verificano il comportamento dei componenti in isolamento, senza dipendere da un database reale o da chiavi JWT effettive, tramite l'uso di mock.
@@ -326,6 +363,7 @@ tests/
 ### Middleware testati
 - **authenticateJWT**: verifica che una richiesta priva dell'header `Authorization` o con token non valido/scaduto venga rifiutata con errore `UnauthorizedError`, e che un token valido popoli correttamente `req.user` permettendo alla richiesta di proseguire.
 - **requireAdmin**: verifica che un utente con un ruolo diverso da `ADMIN` venga bloccato con un errore `ForbiddenError` e se con il ruolo corretto la richiesta possa proseguire.
+- **forbiddenAdmin**: verifica che un utente con un ruolo  di `ADMIN` venga bloccato con un errore `ForbiddenError` e se con il ruolo corretto la richiesta possa proseguire.
 - **checkTokenBalance**: verifica che il controllo del credito blocchi correttamente le richieste quando l'utente non è auttenticato, non esiste nel db, o non ha un credito sufficiente e che le lasci proseguire quando il credito è adeguato.
 
 ### Uso dei mock
@@ -354,7 +392,7 @@ Per eseguire il progetto correttamente è necessario avere installati:
 ### Variabili di ambiente
 Il progetto utilizza un file `.env` nella root del progetto per la gestione delle variabili di ambiente. 
 Il file deve avere il seguente contenuto popolato opportunamente per il proprio ambiente di sviluppo.
-``` text
+``` bash
 POSTGRES_DB=
 POSTGRES_USER=
 POSTGRES_PASSWORD=
@@ -371,7 +409,7 @@ Per avviare il progetto con Docker Compose, posizionarsi nella root del progetto
 docker compose up --build
 ```
 Una volta avviato il backend sarà disponibile all'indirizzo
-```text
+```bash
 http://localhost:3000
 ```
 ### Arresto del container
@@ -386,4 +424,9 @@ Per testare il sistema con dati già pronti è disponibile uno script `seed.ts` 
 - L'utente Admin
 - L'utente fittizzio che rappresenta l'AI
 
+Per l'inizalizzazione eseguire il seguente comando:
+```bash
+docker compose exec backend npm run seed
+```
 ## Autori
+Valentina Santi

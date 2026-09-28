@@ -2,6 +2,7 @@ import { IDao } from "./IDao";
 import { Move} from "../models";
 import { Op, Transaction } from "sequelize";
 
+// DAO per le mosse con implementazione funzioni generiche e specifiche per le mosse
 export class MoveDAo implements IDao<Move>{
     async create(item: Move, transaction?:Transaction): Promise<Move> {
         return await Move.create(item, {transaction});

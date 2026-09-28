@@ -3,6 +3,9 @@ import * as AuthService from "../services/auth.service"
 import { ConflictError, UnauthorizedError } from "../utils/errors";
 import { StatusCodes } from "http-status-codes";
 
+//controller per gestire il login e la registrazione da parte dell'utente
+
+//gestione login
 export const login =async (req: Request,res:Response, next: NextFunction):Promise<void> =>{
     try{
         const {email, password} =req.body;
@@ -17,6 +20,7 @@ export const login =async (req: Request,res:Response, next: NextFunction):Promis
     }
 };
 
+//gestione registrazione
 export const register = async(req: Request,res:Response, next: NextFunction):Promise<void> => {
     try {
         const {email, password} =req.body;

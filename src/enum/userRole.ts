@@ -1,3 +1,4 @@
+//tipologia di utente
 export enum UserRole{
     USER = 'user',
     ADMIN = 'admin',
